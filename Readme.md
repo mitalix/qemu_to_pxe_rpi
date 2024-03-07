@@ -23,9 +23,7 @@ sudo systemctl start dnsmasq ````
 This site was built using [GitHub Pages](https://pages.github.com/).
 
 
-Using the smallest image possible, I found Alpine Linux to fit the paradigm. There is a download link here ... [LINK] (https://alpinelinux.org/downloads/) here
-
-This site was built using [GitHub Pages](https://alpinelinux.org/downloads/).
+Using the smallest image possible, I found Alpine Linux to fit the paradigm. There is a download link here ... [Alpine Downloads](https://alpinelinux.org/downloads/).
 
 ```
 The background color is `#ffffff` for light mode and `#000000` for dark mode.
