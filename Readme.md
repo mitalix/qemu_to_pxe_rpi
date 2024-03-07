@@ -24,7 +24,7 @@ sudo systemctl start dnsmasq ````
 
 Using the smallest image possible, I found Alpine Linux to fit the paradigm. There is a download link here ... [Alpine Downloads](https://alpinelinux.org/downloads/). The gzipped image for aarch64 works just fine. 
 
-```4D
+```gzip
 gunzip alpine-rpi-3.19.1-aarch64.img.gz
 ```
 
