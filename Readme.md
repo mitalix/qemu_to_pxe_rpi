@@ -19,7 +19,7 @@ sudo systemctl start dnsmasq ````
 ```
 
 
-```bash
+```qemu
 qemu-system-aarch64 \
     -smp 4 \
     -M raspi3b \
