@@ -1,5 +1,6 @@
-Qemu to pxe for rpi3
+### Qemu to pxe for rpi3
 
+#### Overview
 
 
 dnsmasq
@@ -45,7 +46,7 @@ Now mount the image
 sudo mount alpine.img /nfs
 ```
 
-A quick and easy way to get the current kernel, image and dtb from the image is to look in the nfs mount. It might not be the most elegent method, but it is enough to show that it works.  Some distributions of linux don't require the initrd/initramfs to load, while Alpine does require it. So, we provide qemu with the kernel, initrd, and dtb as seen below. Also, append the "cmdline.txt", i.e. console=..., etc, to get the console working. Adding the usbdevices ensures devices are available. Network is defined, but not ready yet. I'll cover that later. MAchine type must be specified when using aarch64 emulation. The image alpine.img loads and root login is available without password.
+A quick and easy way to get the current kernel, image and dtb from the image is to look in the nfs mount. It might not be the most elegent method, but it is enough to show that it works.  Some distributions of linux don't require the initrd/initramfs to load, while Alpine does require it. So, we provide qemu with the kernel, initrd, and dtb as seen below. Also, append the "cmdline.txt", i.e. console=..., etc, to get the console working. Adding the usbdevices ensures devices are available. Network is defined, but not ready yet. I'll cover that later. Machine type must be specified when using aarch64 emulation. The image alpine.img loads and root login is available without password.
 
 ```4D
 qemu-system-aarch64 \
@@ -63,4 +64,45 @@ qemu-system-aarch64 \
 ```
 
 
+***
 
+Now that the qemu image works, we'll go ahead and pxe-boot it. So, to start, just like in the previous section mount the alpine.img image on /nfs
+
+```4D
+sudo mount alpine.img /nfs
+```
+
+***
+dnsmasq
++ tftp 
+    - /srv/tftp
+    - $SERIAL_NUMBER
++ nfs
+    - /nfs
+
+***
+export the directory /nfs to the network in '/etc/exports'
+
+```
+/nfs *(rw,sync,no_squash)
+/srv/tftp *(rw,sync,no_squash)
+```
+
+
+Mount the nfs directory under /nfs to /srv/tftp/$SERIAL_NUMBER, i.e., `SERIAL_NUMBER=76d2a334`
+
+```
+sudo mount -vo bind /nfs /srv/tftp/$SERIAL_NUMBER
+```
+
+
+
+```
+sudo systemctl start dnsmasq ````
+```
+
+***
+***
+***
+***
+***
