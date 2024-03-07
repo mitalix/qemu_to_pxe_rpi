@@ -75,6 +75,13 @@ There are a lot of factors that could cause this to fail, it took me months unti
 
 
 ***
+Now, assuming that the qemu image works, we'll go ahead and pxe-boot it. So, to start, just like in the previous section mount the alpine.img image on /nfs
+
+```4D
+sudo mount alpine.img /nfs
+```
+
+***
 #### Configuration inside the client image
 
 The kernel needs to point to the network image. This achieved through modifying `/nfs/cmdline.txt`
@@ -83,14 +90,7 @@ The kernel needs to point to the network image. This achieved through modifying 
 modules=loop,squashfs,sd-mod,usb-storage quiet console=serial0,115200 console=tty1 root=/dev/nfs nfsroot=192.168.0.108:/nfs,vers=3 rw ip=dhc
 p rootwait elevator=deadline
 ```
-
 ***
-Now, assuming that the qemu image works, we'll go ahead and pxe-boot it. So, to start, just like in the previous section mount the alpine.img image on /nfs
-
-```4D
-sudo mount alpine.img /nfs
-```
-
 Export the directory /nfs and probably the /srv/tftp/$SERIAL_NUMBER to the network in '/etc/exports'
 
 ```
