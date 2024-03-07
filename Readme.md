@@ -3,6 +3,7 @@
 #### Overview
 
 
+The server is a Dell laptop with Manjaro. 
 dnsmasq
 + tftp 
     - /srv/tftp
@@ -55,7 +56,7 @@ qemu-system-aarch64 \
     -M raspi3b \
     -hda alpine.img \
     -kernel /nfs/boot/vmlinuz-rpi \
-    -initrd nfs/boot/initramfs-rpi \
+    -initrd /nfs/boot/initramfs-rpi \
     -dtb /nfs/bcm2710-rpi-3-b.dtb \
     -append "console=ttyS0,115200 console=tty1 fsck.repair=yes rootwait" \
     -usbdevice keyboard \
@@ -66,22 +67,30 @@ qemu-system-aarch64 \
 
 
 ***
+Each host system is different. On a rpi raspbian system, qemu pops up a console window. On manjaro, for instance, you need to install vnc, i.e., `pacman -Ss tigervnc`. To get a console using vnc, qemu will probably give you a por number, .i.e. :5900 as parameter, type in another window: 
+```
+vncviewer :5900
+```
+There are a lot of factors that could cause this to fail, it took me months until I was able to get the keyboard and mouse working on a qemu rpi, but it maybe will be different on your system.
 
-Now that the qemu image works, we'll go ahead and pxe-boot it. So, to start, just like in the previous section mount the alpine.img image on /nfs
+
+***
+#### Configuration inside the client image
+
+The kernel needs to point to the network image. This achieved through modifying `/nfs/cmdline.txt`
+
+```
+modules=loop,squashfs,sd-mod,usb-storage quiet console=serial0,115200 console=tty1 root=/dev/nfs nfsroot=192.168.0.108:/nfs,vers=3 rw ip=dhc
+p rootwait elevator=deadline
+```
+
+***
+Now, assuming that the qemu image works, we'll go ahead and pxe-boot it. So, to start, just like in the previous section mount the alpine.img image on /nfs
 
 ```4D
 sudo mount alpine.img /nfs
 ```
 
-***
-dnsmasq
-+ tftp 
-    - /srv/tftp
-    - $SERIAL_NUMBER
-+ nfs
-    - /nfs
-
-***
 Export the directory /nfs and probably the /srv/tftp/$SERIAL_NUMBER to the network in '/etc/exports'
 
 ```
@@ -89,13 +98,18 @@ Export the directory /nfs and probably the /srv/tftp/$SERIAL_NUMBER to the netwo
 /nfs *(rw,sync,no_subtree_check,no_root_squash)
 ```
 
+Export, that is, make network nfs shares available to the network.
+
+```
+sudo exportfs -a
+```
 Create the mountpoint if it doesn't exist alread. Mount the nfs directory under /nfs to /srv/tftp/$SERIAL_NUMBER, i.e., `SERIAL_NUMBER=76d2a334`
 
 ```
 [ -d /srv/tftp/$SERIAL_NUMBER ] || sudo mkdir -v /srv/tftp/$SERIAL_NUMBER
 sudo mount -vo bind /nfs /srv/tftp/$SERIAL_NUMBER
 ```
-
+On manjaro, install `pacman -Ss dnsmasq`
 
 Dnsmasq configuration is in the `/etc/dnsmasq.conf` file
 ```
@@ -111,8 +125,4 @@ Finally start the systemd dnsmasq.service
 sudo systemctl start dnsmasq ````
 ```
 
-***
-***
-***
-***
 ***
