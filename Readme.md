@@ -110,7 +110,7 @@ Create the mountpoint if it doesn't exist alread. Mount the nfs directory under 
 [ -d /srv/tftp/$SERIAL_NUMBER ] || sudo mkdir -v /srv/tftp/$SERIAL_NUMBER
 sudo mount -vo bind /nfs /srv/tftp/$SERIAL_NUMBER
 ```
-On manjaro, install `pacman -Ss dnsmasq`
+On manjaro, install `pacman -S dnsmasq`
 
 Dnsmasq configuration is in the `/etc/dnsmasq.conf` file
 ```
@@ -123,7 +123,22 @@ pxe-service=0,"Raspberry Pi Boot"
 ```
 Finally start the systemd dnsmasq.service
 ```
-sudo systemctl start dnsmasq ````
+sudo systemctl start dnsmasq
 ```
 
 ***
+
+
+```4D
+qemu-system-aarch64 \
+    -smp 4 \
+    -M raspi3b \
+    -kernel /nfs/boot/vmlinuz-rpi \
+    -initrd /nfs/boot/initramfs-rpi \
+    -dtb /nfs/bcm2710-rpi-3-b.dtb \
+    -append "console=ttyS0,115200 console=tty1 fsck.repair=yes rootwait" \
+    -usbdevice keyboard \
+    -usbdevice mouse \
+    -device usb-net,netdev=net0 \
+    -netdev user,id=net0,hostfwd=tcp::5555-:22 
+```
