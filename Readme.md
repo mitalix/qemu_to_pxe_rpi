@@ -20,20 +20,22 @@ mount the nfs directory under /nfs to /srv/tftp/$SERIAL_NUMBER
 sudo systemctl start dnsmasq ````
 ```
 
-This site was built using [GitHub Pages](https://pages.github.com/).
+***
 
+Using the smallest image possible, I found Alpine Linux to fit the paradigm. There is a download link here ... [Alpine Downloads](https://alpinelinux.org/downloads/). The gzipped image for aarch64 works just fine. 
 
-Using the smallest image possible, I found Alpine Linux to fit the paradigm. There is a download link here ... [Alpine Downloads](https://alpinelinux.org/downloads/).
+```bash
+gunzip alpine-rpi-3.19.1-aarch64.img.gz
+```
 
 I like to keep a backup, because a little modification is needed for qemu, which requires the image size to be a multiple of four(4). Therefore, copy the image:
 
-```
+```bash
 cp alpine-rpi-3.19.1-aarch64.img alpine.img
 ```
-The image is quite small, but must be resized :
-```
+The image is quite small, but must be resized. This number can be realized when running qemu the first time and the error message recommends the size :
+```bash
 qemu-img resize alpine.img 128M
-
 ```
 
 
