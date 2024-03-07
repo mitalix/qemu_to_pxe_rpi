@@ -33,7 +33,9 @@ cp alpine-rpi-3.19.1-aarch64.img alpine.img
 The image is quite small, but must be resized :
 ```
 qemu-img resize alpine.img 128M
+
 ```
+
 
 Now mount the image
 
