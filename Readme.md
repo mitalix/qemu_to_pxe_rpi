@@ -75,6 +75,7 @@ There are a lot of factors that could cause this to fail, it took me months unti
 
 
 ***
+### PXE Boot
 Now, assuming that the qemu image works, we'll go ahead and pxe-boot it. So, to start, just like in the previous section mount the alpine.img image on /nfs
 
 ```4D
