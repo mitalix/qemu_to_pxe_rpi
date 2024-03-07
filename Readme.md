@@ -39,7 +39,7 @@ qemu-img resize alpine.img 128M
 ```
 
 
-Create, if it doesn't exist, the `/nfs` directory mount the image
+Create, if it doesn't exist, the `/nfs` directory and mount the image
 
 ```4D
 [ -d /nfs ] || sudo mkdir -v /nfs
