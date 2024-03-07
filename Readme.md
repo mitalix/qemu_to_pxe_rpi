@@ -45,7 +45,7 @@ Now mount the image
 sudo mount alpine.img /nfs
 ```
 
-A quick and easy way to get the current kernel, image and dtb from the image is to look in the nfs mount. It might not be the most elegent method, but it is enough to show that it works.  Some distributions of linux don't require the initrd/initramfs to load, while Alpine does require it. So, we provide qemu with the kernel, initrd, and dtb as seen below. Also, append the "cmdline.txt" to get the console working. Adding the usbdevices ensures devices are available. Network is defined, but not ready yet. I'll cover that later. MAchine type must be specified when using aarch64 emulation.
+A quick and easy way to get the current kernel, image and dtb from the image is to look in the nfs mount. It might not be the most elegent method, but it is enough to show that it works.  Some distributions of linux don't require the initrd/initramfs to load, while Alpine does require it. So, we provide qemu with the kernel, initrd, and dtb as seen below. Also, append the "cmdline.txt", i.e. console=..., etc, to get the console working. Adding the usbdevices ensures devices are available. Network is defined, but not ready yet. I'll cover that later. MAchine type must be specified when using aarch64 emulation. The image alpine.img loads and root login is available without password.
 
 ```4D
 qemu-system-aarch64 \
