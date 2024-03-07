@@ -25,8 +25,24 @@ This site was built using [GitHub Pages](https://pages.github.com/).
 
 Using the smallest image possible, I found Alpine Linux to fit the paradigm. There is a download link here ... [Alpine Downloads](https://alpinelinux.org/downloads/).
 
+I like to keep a backup, because a little modification is needed for qemu, which requires the image size to be a multiple of four(4). Therefore, copy the image:
+
 ```
-The background color is `#ffffff` for light mode and `#000000` for dark mode.
+cp alpine-rpi-3.19.1-aarch64.img alpine.img
+```
+The image is quite small, but must be resized :
+```
+qemu-img resize alpine.img 128M
+```
+```bash
+sudo mount alpine.img /nfs
+
+
+```
+
+```
+test `#00ffff` test `#ff0000` test
+test`#00ffff`test`#ff0000`test
 ```
 
 
