@@ -45,15 +45,16 @@ Now mount the image
 sudo mount alpine.img /nfs
 ```
 
+A quick and easy way to get the current kernel, image and dtb from the image is to look in the nfs mount. It might not be the most elegent method, but it is enough to show that it works.  Some distributions of linux don't require the initrd/initramfs to load, while Alpine does require it. So, we provide qemu with the kernel, initrd, and dtb as seen below. Also, append the "cmdline.txt" to get the console working. Adding the usbdevices ensures devices are available. Network is defined, but not ready yet. I'll cover that later. MAchine type must be specified when using aarch64 emulation.
 
 ```4D
 qemu-system-aarch64 \
     -smp 4 \
     -M raspi3b \
     -hda alpine.img \
-    -kernel /mnt/boot/vmlinuz-rpi \
-    -initrd /mnt/boot/initramfs-rpi \
-    -dtb /mnt/bcm2710-rpi-3-b.dtb \
+    -kernel /nfs/boot/vmlinuz-rpi \
+    -initrd nfs/boot/initramfs-rpi \
+    -dtb /nfs/bcm2710-rpi-3-b.dtb \
     -append "console=ttyS0,115200 console=tty1 fsck.repair=yes rootwait" \
     -usbdevice keyboard \
     -usbdevice mouse \
