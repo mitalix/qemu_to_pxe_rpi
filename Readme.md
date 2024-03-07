@@ -22,8 +22,7 @@ sudo systemctl start dnsmasq ````
 ```
 
 ***
-
-Using the smallest image possible, I found Alpine Linux to fit the paradigm. There is a download link here ... [Alpine Downloads](https://alpinelinux.org/downloads/). The gzipped image for aarch64 works just fine. 
+Using qemu to test and build an iimage. This comes in handy when you want prepare an image for pxe-boot. Instead of trying it out on the physical server, we test out a virtual machine in qemu. It saves on constantly having to run over to the machine and unplug/plug the device. Using the smallest image possible, I found Alpine Linux to fit the paradigm. There is a download link here ... [Alpine Downloads](https://alpinelinux.org/downloads/). The gzipped image for aarch64 works just fine. 
 
 ```4D
 gunzip alpine-rpi-3.19.1-aarch64.img.gz
@@ -40,9 +39,11 @@ qemu-img resize alpine.img 128M
 ```
 
 
-Now mount the image
+Create, if it doesn't exist, the `/nfs` directory mount the image
 
 ```4D
+[ -d /nfs ] || sudo mkdir -v /nfs
+
 sudo mount alpine.img /nfs
 ```
 
@@ -81,22 +82,31 @@ dnsmasq
     - /nfs
 
 ***
-export the directory /nfs to the network in '/etc/exports'
+Export the directory /nfs and probably the /srv/tftp/$SERIAL_NUMBER to the network in '/etc/exports'
 
 ```
-/nfs *(rw,sync,no_squash)
-/srv/tftp *(rw,sync,no_squash)
+/srv/tftp *(rw,sync,no_subtree_check,no_root_squash)
+/nfs *(rw,sync,no_subtree_check,no_root_squash)
 ```
 
-
-Mount the nfs directory under /nfs to /srv/tftp/$SERIAL_NUMBER, i.e., `SERIAL_NUMBER=76d2a334`
+Create the mountpoint if it doesn't exist alread. Mount the nfs directory under /nfs to /srv/tftp/$SERIAL_NUMBER, i.e., `SERIAL_NUMBER=76d2a334`
 
 ```
+[ -d /srv/tftp/$SERIAL_NUMBER ] || sudo mkdir -v /srv/tftp/$SERIAL_NUMBER
 sudo mount -vo bind /nfs /srv/tftp/$SERIAL_NUMBER
 ```
 
 
-
+Dnsmasq configuration is in the `/etc/dnsmasq.conf` file
+```
+interface=*
+dhcp-range=192.168.0.10,192.168.0.50,12h
+log-dhcp
+enable-tftp
+tftp-root=/srv/tftp
+pxe-service=0,"Raspberry Pi Boot"
+```
+Finally start the systemd dnsmasq.service
 ```
 sudo systemctl start dnsmasq ````
 ```
