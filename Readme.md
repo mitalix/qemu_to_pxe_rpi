@@ -34,24 +34,15 @@ The image is quite small, but must be resized :
 ```
 qemu-img resize alpine.img 128M
 ```
+
+Now mount the image
+
 ```bash
 sudo mount alpine.img /nfs
-
-
-```
-
-```
-test `#00ffff` test `#ff0000` test
-test`#00ffff`test`#ff0000`test
 ```
 
 
-
-```
-`rgb(9, 105, 218)`
-```
-
-```bash
+```4D
 qemu-system-aarch64 \
     -smp 4 \
     -M raspi3b \
