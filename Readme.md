@@ -20,10 +20,13 @@ mount the nfs directory under /nfs to /srv/tftp/$SERIAL_NUMBER
 sudo systemctl start dnsmasq ````
 ```
 
-Using the smallest image possible, I found Alpine Linux to fit the paradigm. There is a download link here ... [LINK] https://alpinelinux.org/downloads/ here
+Using the smallest image possible, I found Alpine Linux to fit the paradigm. There is a download link here ... [LINK] (https://alpinelinux.org/downloads/) here
 
-
+```
 The background color is `#ffffff` for light mode and `#000000` for dark mode.
+```
+
+
 
 ```
 `rgb(9, 105, 218)`
