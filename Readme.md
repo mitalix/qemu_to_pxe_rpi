@@ -20,6 +20,9 @@ mount the nfs directory under /nfs to /srv/tftp/$SERIAL_NUMBER
 sudo systemctl start dnsmasq ````
 ```
 
+This site was built using [GitHub Pages](https://pages.github.com/).
+
+
 Using the smallest image possible, I found Alpine Linux to fit the paradigm. There is a download link here ... [LINK] (https://alpinelinux.org/downloads/) here
 
 ```
