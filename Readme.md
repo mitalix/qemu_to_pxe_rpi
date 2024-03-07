@@ -1,5 +1,7 @@
 Qemu to pxe for rpi3
 
+
+
 dnsmasq
 + tftp 
     - /srv/tftp
@@ -18,8 +20,9 @@ mount the nfs directory under /nfs to /srv/tftp/$SERIAL_NUMBER
 sudo systemctl start dnsmasq ````
 ```
 
+Using the smallest image possible, I found Alpine Linux to fit the paradigm. There is a download link here ... [LINK] https://alpinelinux.org/downloads/ here
 
-```qemu
+```bash
 qemu-system-aarch64 \
     -smp 4 \
     -M raspi3b \
