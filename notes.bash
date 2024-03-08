@@ -11,3 +11,12 @@ sudo ip link del name br0 type bridge
 
 
 qemu-system-aarch64 -M raspi3b -device usb-net,netdev=net0 -netdev user,id=net0,hostfwd=tcp::2022-:22
+
+
+ # ip link add br0 type bridge
+ # ip tuntap add dev tap0 mode tap
+ # ip link set dev tap0 master br0   # set br0 as the target bridge for tap0
+ # ip link set dev eth0 master br0   # set br0 as the target bridge for eth0
+ # ip link set dev br0 up
+
+
