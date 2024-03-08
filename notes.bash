@@ -7,7 +7,6 @@ sudo brctl addif br0 vnet0
 
 sudo ip link set br0 down    
 sudo ip link del name br0 type bridge    
-oo
 
 
 
