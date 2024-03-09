@@ -142,3 +142,13 @@ qemu-system-aarch64 \
     -device usb-net,netdev=net0 \
     -netdev user,id=net0,hostfwd=tcp::5555-:22 
 ```
+```4D
+qemu-system-aarch64 \
+    -smp 4 \
+    -M raspi3b \
+    -kernel /nfs/boot/vmlinuz-rpi \
+    -initrd /nfs/boot/initramfs-rpi \
+    -dtb /nfs/bcm2710-rpi-3-b.dtb \
+    -append "console=ttyS0,115200 console=tty1 fsck.repair=yes rootwait" \
+    -netdev user,id=net0,net=192.168.1.1/24,dhcpstart=192.168.1.234 \
+    -device virtio-net-device,netdev=net0 
