@@ -152,3 +152,4 @@ qemu-system-aarch64 \
     -append "console=ttyS0,115200 console=tty1 fsck.repair=yes rootwait" \
     -netdev user,id=net0,net=192.168.1.1/24,dhcpstart=192.168.1.234 \
     -device virtio-net-device,netdev=net0 
+    ```
