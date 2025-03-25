@@ -67,7 +67,7 @@ qemu-system-aarch64 \
 
 
 ***
-Each host system is different. On a rpi raspbian system, qemu pops up a console window. On manjaro, for instance, you need to install vnc, i.e., `pacman -Ss tigervnc`. To get a console using vnc, qemu will probably give you a por number, .i.e. :5900 as parameter, type in another window: 
+Each host system is different. On a rpi raspbian system, qemu pops up a console window. On manjaro, for instance, you need to install vnc, i.e., `pacman -Ss tigervnc`. To get a console using vnc, qemu will probably give you a port number, .i.e. :5900 as parameter, type in another window: 
 ```
 vncviewer :5900
 ```
@@ -152,4 +152,4 @@ qemu-system-aarch64 \
     -append "console=ttyS0,115200 console=tty1 fsck.repair=yes rootwait" \
     -netdev user,id=net0,net=192.168.1.1/24,dhcpstart=192.168.1.234 \
     -device virtio-net-device,netdev=net0 
-    ```
+```
