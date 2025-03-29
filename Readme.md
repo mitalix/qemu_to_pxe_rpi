@@ -19,7 +19,7 @@ export the directory /nfs to the network
 mount the nfs directory under /nfs to /srv/tftp/$SERIAL_NUMBER
 
 ```
-sudo systemctl start dnsmasq ````
+sudo systemctl start dnsmasq
 ```
 
 ***
